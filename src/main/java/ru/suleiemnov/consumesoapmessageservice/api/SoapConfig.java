@@ -12,15 +12,17 @@ public class SoapConfig extends WsConfigurerAdapter {
     @Bean
     public Jaxb2Marshaller marshaller(){
         Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
-        marshaller.setPackagesToScan("ru/suleiemnov/consumesoapmessageservice/wsdl");
+        marshaller.setPackagesToScan("ru.suleiemnov.consumesoapmessageservice.wsdl");
         return marshaller;
     }
 
     @Bean
-    public WebServiceTemplate template(){
-        WebServiceTemplate template = new WebServiceTemplate();
-        template.setMarshaller(marshaller());
-        return template;
+    public UserClient countryClient(Jaxb2Marshaller marshaller) {
+        UserClient client = new UserClient();
+        client.setDefaultUri("http://localhost:8080/ws");
+        client.setMarshaller(marshaller);
+        client.setUnmarshaller(marshaller);
+        return client;
     }
 
 }
